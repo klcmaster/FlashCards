@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Imagens - FlashCards</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            color: #6366f1;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: rgba(99, 102, 241, 0.1);
+            border: 2px solid #6366f1;
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .card h2 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #a5b4fc;
+        }
+        canvas {
+            width: 100%;
+            max-width: 100%;
+            border-radius: 8px;
+            background: white;
+            margin-bottom: 15px;
+            display: block;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .status {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(34, 197, 94, 0.2);
+            border: 2px solid #22c55e;
+            border-radius: 12px;
+            color: #86efac;
+            font-weight: 600;
+            display: none;
+        }
+        .status.show {
+            display: block;
+        }
+        .info {
+            text-align: center;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Gerador de Imagens</h1>
+        <p class="info">Clique em "Gerar e Baixar" para cada imagem necessária</p>
+        
+        <div class="grid">
+            <!-- Ícone 192 -->
+            <div class="card">
+                <h2>Ícone 192x192</h2>
+                <canvas id="icon192" width="192" height="192"></canvas>
+                <button onclick="downloadImage('icon192', 'icon-192.png')">Gerar e Baixar</button>
+            </div>
+
+            <!-- Ícone 192 Maskable -->
+            <div class="card">
+                <h2>Ícone 192x192 (Maskable)</h2>
+                <canvas id="icon192m" width="192" height="192"></canvas>
+                <button onclick="downloadImage('icon192m', 'icon-192-maskable.png')">Gerar e Baixar</button>
+            </div>
+
+            <!-- Ícone 512 -->
+            <div class="card">
+                <h2>Ícone 512x512</h2>
+                <canvas id="icon512" width="512" height="512"></canvas>
+                <button onclick="downloadImage('icon512', 'icon-512.png')">Gerar e Baixar</button>
+            </div>
+
+            <!-- Screenshot Mobile -->
+            <div class="card">
+                <h2>Screenshot Mobile</h2>
+                <canvas id="screenshotMobile" width="270" height="360"></canvas>
+                <button onclick="downloadImage('screenshotMobile', 'screenshot-narrow.png')">Gerar e Baixar</button>
+            </div>
+
+            <!-- Screenshot Desktop -->
+            <div class="card">
+                <h2>Screenshot Desktop</h2>
+                <canvas id="screenshotDesktop" width="320" height="180"></canvas>
+                <button onclick="downloadImage('screenshotDesktop', 'screenshot-wide.png')">Gerar e Baixar</button>
+            </div>
+        </div>
+
+        <div id="status" class="status">
+            ✅ Imagem baixada com sucesso!
+        </div>
+    </div>
+
+    <script>
+        const colors = {
+            primary: '#6366f1',
+            dark: '#0f172a',
+            light: '#e0e7ff',
+            white: '#ffffff'
+        };
+
+        function drawIcon192() {
+            const canvas = document.getElementById('icon192');
+            const ctx = canvas.getContext('2d');
+
+            // Fundo
+            ctx.fillStyle = colors.primary;
+            ctx.fillRect(0, 0, 192, 192);
+            ctx.beginPath();
+            ctx.roundRect(0, 0, 192, 192, 45);
+            ctx.fill();
+
+            // Texto "FC"
+            ctx.fillStyle = colors.white;
+            ctx.font = 'bold 100px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('FC', 96, 110);
+        }
+
+        function drawIcon192Maskable() {
+            const canvas = document.getElementById('icon192m');
+            const ctx = canvas.getContext('2d');
+
+            // Fundo
+            ctx.fillStyle = colors.primary;
+            ctx.fillRect(0, 0, 192, 192);
+
+            // Círculo decorativo
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.beginPath();
+            ctx.arc(96, 96, 80, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Texto "FC"
+            ctx.fillStyle = colors.white;
+            ctx.font = 'bold 100px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('FC', 96, 110);
+        }
+
+        function drawIcon512() {
+            const canvas = document.getElementById('icon512');
+            const ctx = canvas.getContext('2d');
+
+            // Fundo
+            ctx.fillStyle = colors.primary;
+            ctx.fillRect(0, 0, 512, 512);
+            ctx.beginPath();
+            ctx.roundRect(0, 0, 512, 512, 120);
+            ctx.fill();
+
+            // Texto "FC"
+            ctx.fillStyle = colors.white;
+            ctx.font = 'bold 280px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('FC', 256, 350);
+        }
+
+        function drawScreenshotMobile() {
+            const canvas = document.getElementById('screenshotMobile');
+            const ctx = canvas.getContext('2d');
+
+            // Fundo
+            ctx.fillStyle = colors.dark;
+            ctx.fillRect(0, 0, 270, 360);
+
+            // Card principal
+            ctx.fillStyle = colors.primary;
+            ctx.beginPath();
+            ctx.roundRect(25, 75, 220, 210, 15);
+            ctx.fill();
+
+            // Ícone de livro
+            ctx.fillStyle = colors.white;
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('📚', 135, 130);
+
+            // Texto
+            ctx.font = 'bold 24px Arial';
+            ctx.fillText('FlashCards', 135, 180);
+
+            // Texto menor
+            ctx.font = '12px Arial';
+            ctx.fillStyle = colors.light;
+            ctx.fillText('Aprenda estudando', 135, 260);
+        }
+
+        function drawScreenshotDesktop() {
+            const canvas = document.getElementById('screenshotDesktop');
+            const ctx = canvas.getContext('2d');
+
+            // Fundo
+            ctx.fillStyle = colors.dark;
+            ctx.fillRect(0, 0, 320, 180);
+
+            // Card principal
+            ctx.fillStyle = colors.primary;
+            ctx.beginPath();
+            ctx.roundRect(30, 30, 260, 120, 15);
+            ctx.fill();
+
+            // Ícone
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = colors.white;
+            ctx.fillText('🎓', 80, 90);
+
+            // Texto
+            ctx.font = 'bold 20px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('FlashCards AI', 130, 85);
+
+            // Subtexto
+            ctx.font = '11px Arial';
+            ctx.fillStyle = colors.light;
+            ctx.fillText('Estude com eficiência', 130, 105);
+        }
+
+        function downloadImage(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = filename;
+            link.click();
+
+            // Mostrar status
+            const status = document.getElementById('status');
+            status.classList.add('show');
+            setTimeout(() => {
+                status.classList.remove('show');
+            }, 3000);
+        }
+
+        // Desenhar todas as imagens ao carregar
+        window.addEventListener('load', () => {
+            // Polyfill para roundRect se necessário
+            if (!CanvasRenderingContext2D.prototype.roundRect) {
+                CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+                    if (w < 2 * r) r = w / 2;
+                    if (h < 2 * r) r = h / 2;
+                    this.beginPath();
+                    this.moveTo(x + r, y);
+                    this.arcTo(x + w, y, x + w, y + h, r);
+                    this.arcTo(x + w, y + h, x, y + h, r);
+                    this.arcTo(x, y + h, x, y, r);
+                    this.arcTo(x, y, x + w, y, r);
+                    this.closePath();
+                    return this;
+                };
+            }
+
+            drawIcon192();
+            drawIcon192Maskable();
+            drawIcon512();
+            drawScreenshotMobile();
+            drawScreenshotDesktop();
+        });
+    </script>
+</body>
+</html>
