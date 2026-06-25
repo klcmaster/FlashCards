@@ -1,0 +1,581 @@
+[
+    {
+        "materia": "Desenvolvimento C#",
+        "topicos": [
+            {
+                "nome": "Tipos e Gerenciamento de Memória",
+                "cards": [
+                    {
+                        "q": "Qual a diferença crucial entre Structs (Value Types) e Classes (Reference Types) em relação à alocação de memória?",
+                        "a": "Structs são alocadas diretamente na Stack (Pilha), onde o ciclo de vida é curto e o escopo é local. Classes são alocadas no Heap e gerenciadas pelo Garbage Collector. [Pegadinha]: Se uma Struct for declarada dentro de uma Classe, ela será alocada no Heap junto com a classe proprietária, e não na Stack."
+                    },
+                    {
+                        "q": "O que diferencia um Record de uma Classe tradicional no C#?",
+                        "a": "Records fornecem imutabilidade interna por padrão (usando a palavra-chave 'init') e igualdade baseada em valores (Value-based equality), enquanto classes tradicionais validam igualdade por referência de memória. São ideais para DTOs e eventos."
+                    }
+                ]
+            },
+            {
+                "nome": "Programação Assíncrona",
+                "cards": [
+                    {
+                        "q": "Por que retornar 'async void' é considerado uma má prática no C# e quando ele é aceitável?",
+                        "a": "Porque métodos 'async void' não podem ser aguardados (awaited) e qualquer exceção lançada dentro deles derrubará o processo da aplicação por não ser capturada corretamente. A única exceção aceitável é em manipuladores de eventos (Event Handlers)."
+                    }
+                ]
+            },
+            {
+                "nome": "Novidades do C#",
+                "cards": [
+                    {
+                        "q": "O que são Primary Constructors (Construtores Primários) introduzidos no C# 12 e como eles funcionam em classes comuns?",
+                        "a": "Permitem declarar o construtor diretamente na assinatura da classe. Os parâmetros ficam automaticamente disponíveis no escopo de toda a classe. [Pegadinha]: Diferente dos Records, em classes comuns os parâmetros do construtor primário NÃO viram propriedades públicas automaticamente; eles agem apenas como campos privados capturados."
+                    },
+                    {
+                        "q": "Para que serve a palavra-chave 'required' introduzida no C# 11?",
+                        "a": "Ela obriga que uma propriedade ou campo seja inicializado durante a criação do objeto (via object initializer). Se quem estiver instanciando a classe esquecer de passar o valor, o compilador gera um erro. Substitui a necessidade de criar múltiplos construtores apenas para garantir campos obrigatórios."
+                    },
+                    {
+                        "q": "Como o Pattern Matching evoluiu com o 'List Patterns' no C# 11?",
+                        "a": "Permite testar e desestruturar arrays ou listas comparando seus elementos diretamente. Exemplo: 'if (numeros is [1, 2, .. var resto])' valida se a lista começa com 1 e 2, capturando o restante. É excelente para parsing de dados de forma limpa."
+                    },
+                    {
+                        "q": "O que é o recurso de 'Collection Expressions' do C# 12 e qual sua vantagem?",
+                        "a": "Introduz uma sintaxe única e simplificada com colchetes para criar coleções comuns. Em vez de 'new int[] {1, 2}' ou 'new List<int> {1, 2}', você usa apenas '[1, 2]'. Além da legibilidade, o compilador otimiza a alocação de memória por baixo dos panos dependendo do destino."
+                    },
+                    {
+                        "q": "Qual a diferença de comportamento entre usar 'init;' e 'readonly' em uma propriedade?",
+                        "a": "O 'readonly' restringe a alteração apenas para dentro do construtor da classe. O 'init' (introduzido no C# 9/10) estende isso, permitindo que o valor seja definido também no momento da inicialização do objeto ('new Objeto { Prop = valor }'), tornando-se imutável logo após essa criação."
+                    },
+                    {
+                        "q": "O que mudou na declaração de Namespaces com os 'File-scoped Namespaces' no C# 10?",
+                        "a": "Permite declarar o namespace em uma única linha terminada em ponto e vírgula ('namespace MeuProjeto.Servicos;'), eliminando a necessidade de abrir e fechar chaves '{}' no arquivo todo. Isso reduz o recuo (indentação) horizontal desnecessário do código."
+                    }
+                ]
+            },
+            {
+                "nome": "Estratégia e Dicas de Entrevista",
+                "cards": [
+                    {
+                        "q": "Como demonstrar maturidade de nível Pleno ao falar sobre atualizações e novidades da linguagem (C# 11/12/13)?",
+                        "a": "Não foque apenas em dizer a sintaxe. Explique o ganho arquitetural. Exemplo: 'Uso Primary Constructors e Records para reduzir código boilerplate e focar na imutabilidade dos DTOs, o que deixa o sistema mais seguro contra efeitos colaterais e melhora a legibilidade do time'."
+                    },
+                    {
+                        "q": "O que responder se o entrevistador te perguntar sobre um recurso técnico complexo do C# que você não lembra de cabeça?",
+                        "a": "Nunca chute. Mostre seu processo de resolução: 'Não me recordo da sintaxe exata ou do comportamento desse recurso específico agora, mas no dia a dia eu recorreria à documentação oficial da Microsoft ou analisaria o comportamento via testes unitários isolados para validar a hipótese antes de levar para o código principal'."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "materia": "ASP .NET Core",
+        "topicos": [
+            {
+                "nome": "Injeção de Dependência e Pipeline",
+                "cards": [
+                    {
+                        "q": "O que acontece se você injetar um serviço Scoped dentro de um serviço registrado como Singleton?",
+                        "a": "Isso causa uma 'Captive Dependency' (Dependência Prisioneira). O serviço Scoped passará a se comportar como um Singleton (nunca sendo descartado), o que pode causar vazamento de memória ou problemas de concorrência com o DbContext do EF Core. [Dica]: Ative o 'ValidateScopes' em desenvolvimento para pegar isso no startup."
+                    },
+                    {
+                        "q": "Como a ordem dos Middlewares no arquivo Program.cs impacta a execução da API?",
+                        "a": "A ordem de registro define estritamente a ordem de execução no pipeline HTTP (inbound e outbound). [Pegadinha]: Se você registrar o '.UseAuthorization()' antes do '.UseAuthentication()', a aplicação tentará validar as permissões de um usuário cuja identidade ainda sequer foi decodificada e validada."
+                    }
+                ]
+            },
+            {
+                "nome": "Persistência e Segurança (EF Core & Identity)",
+                "cards": [
+                    {
+                        "q": "Em quais cenários o uso do método '.AsNoTracking()' é altamente recomendado no Entity Framework Core?",
+                        "a": "Em operações estritamente de leitura (consultas/queries). Ele desativa o Change Tracker do EF Core, economizando memória e CPU por não precisar monitorar mudanças nas entidades. [Pegadinha]: Nunca use se você for modificar e salvar a entidade logo em seguida."
+                    },
+                    {
+                        "q": "Como o Identity Framework gerencia a segurança em Web APIs sem estado (Stateless)?",
+                        "a": "Ele valida as credenciais do usuário e emite um token assinado (JWT - JSON Web Token). A API não armazena sessões; cada requisição subsequente deve enviar o token no cabeçalho Authorization (Bearer) para que o Identity decodifique as Claims do usuário."
+                    }
+                ]
+            },
+            {
+                "nome": "Middlewares e Pipeline HTTP",
+                "cards": [
+                    {
+                        "q": "O que é um Middleware no ASP.NET Core e como funciona o padrão de execução 'Inbound/Outbound'?",
+                        "a": "Middlewares são componentes de software encadeados em um pipeline para manipular requisições e respostas HTTP. Uma requisição passa por cada middleware em ordem (Inbound), chega ao endpoint (como um Controller) e a resposta faz o caminho inverso voltando pelos mesmos middlewares na ordem oposta (Outbound)."
+                    },
+                    {
+                        "q": "Qual a diferença prática entre os métodos 'app.Use()', 'app.Run()' e 'app.Map()' no arquivo Program.cs?",
+                        "a": "'app.Use()' registra um middleware que pode manipular a requisição e passar o controle para o próximo da fila. 'app.Run()' registra um middleware terminal, ou seja, ele responde a requisição e short-circuita o pipeline (não chama o próximo). 'app.Map()' é usado para ramificar (branch) o pipeline com base no caminho da URL."
+                    },
+                    {
+                        "q": "Como você cria um Middleware customizado fortemente tipado (Conventional Middleware) no ASP.NET Core?",
+                        "a": "Deve ser uma classe que recebe 'RequestDelegate next' no construtor e implementa um método público e assíncrono chamado 'Invoke' ou 'InvokeAsync', que aceita obrigatoriamente um 'HttpContext' como primeiro parâmetro e chama 'await _next(context)' para continuar o fluxo."
+                    },
+                    {
+                        "q": "Qual o risco arquitetural de injetar um serviço Scoped via construtor em um Middleware convencional?",
+                        "a": "Como os Middlewares tradicionais são instanciados como Singletons no startup da aplicação, injetar um serviço Scoped no construtor causará uma 'Captive Dependency' (o serviço scoped viverá para sempre). [Correção]: Serviços Scoped devem ser injetados diretamente como parâmetros no método 'InvokeAsync'."
+                    },
+                    {
+                        "q": "O que é um IMiddleware (Factory-based Middleware) e qual sua vantagem sobre o método convencional?",
+                        "a": "É um middleware que implementa a interface 'IMiddleware'. Diferente do convencional, ele é resolvido por requisição através do container de Injeção de Dependência. Isso permite que ele mude seu ciclo de vida (pode ser Scoped) e permite que você injete serviços Scoped diretamente no construtor sem riscos."
+                    },
+                    {
+                        "q": "Como funciona o conceito de 'Short-circuiting' (Curto-circuito) no pipeline e dê um exemplo prático de uso.",
+                        "a": "Acontece quando um middleware decide processar a resposta e deliberadamente NÃO chama o método 'next()'. Isso interrompe o fluxo e impede que os middlewares seguintes e os controllers sejam executados. Um exemplo clássico é o middleware de Autenticação/Autorização que retorna '401 Unauthorized' se o token for inválido."
+                    }
+                ]
+            },
+            {
+                "nome": "Entity Framework Core Avançado e Performance",
+                "cards": [
+                    {
+                        "q": "O que é o problema da consulta N+1 no EF Core, como ele acontece e como resolvê-lo?",
+                        "a": "Acontece quando a aplicação faz uma consulta inicial para obter uma lista de registros (1) e depois dispara uma nova consulta no banco de dados para cada registro daquela lista (+N) para carregar propriedades de navegação. É causado pelo uso incorreto de Lazy Loading ou loops inadequados. Resolve-se utilizando Eager Loading através do método '.Include()'."
+                    },
+                    {
+                        "q": "Qual a diferença entre Eager Loading, Explicit Loading e Lazy Loading no EF Core?",
+                        "a": "Eager Loading carrega os dados relacionados na mesma consulta inicial usando JOINs via '.Include()'. Explicit Loading carrega os dados sob demanda explicitamente depois que a entidade já foi instanciada usando '_context.Entry(entidade).Collection(...).Load()'. Lazy Loading carrega os dados automaticamente em segundo plano na primeira vez que a propriedade de navegação é acessada, exigindo proxies configurados."
+                    },
+                    {
+                        "q": "O que faz a funcionalidade de 'Query Splitting' (Consultas Divididas) introduzida no EF Core e quando usá-la?",
+                        "a": "Por padrão, o EF Core usa 'Single Query' (um único JOIN gigante), o que pode causar uma explosão cartesiana e lentidão se houver muitos relacionamentos do tipo 'um para muitos'. O '.AsSplitQuery()' instrui o EF Core a dividir a busca em múltiplas consultas SQL menores e correlacionadas, melhorando drasticamente a performance nesses cenários."
+                    },
+                    {
+                        "q": "Como funciona o mecanismo de 'Change Tracking' (Rastreador de Alterações) do EF Core e qual o impacto do '.AsNoTracking()'?",
+                        "a": "O Change Tracker armazena cópias das entidades recuperadas do banco para monitorar quais propriedades foram modificadas e gerar o UPDATE correto no 'SaveChanges()'. O '.AsNoTracking()' desativa esse monitoramento. Como o EF Core não precisa criar essas cópias e gerenciar esse estado, há um ganho massivo de memória e CPU em consultas apenas de leitura."
+                    },
+                    {
+                        "q": "Por que o uso de funções de cliente (como métodos C# customizados ou 'ToString()') dentro de uma expressão LINQ no EF Core pode causar problemas de performance?",
+                        "a": "Porque o EF Core não consegue traduzir código C# customizado para comandos SQL nativos. Antes do EF Core 3.0, isso causava avaliação no cliente (trazendo toda a tabela para a memória do app para filtrar). Nas versões modernas, ele lança uma exceção em tempo de execução para evitar esse comportamento destrutivo. [Regra]: Filtros devem usar funções que o banco compreenda."
+                    },
+                    {
+                        "q": "O que são 'Shadow Properties' (Propriedades de Sombra) no EF Core e dê um exemplo de caso de uso.",
+                        "a": "São propriedades que existem no modelo conceitual do EF Core e na tabela do banco de dados, mas não estão definidas explicitamente na sua classe de entidade C#. Um caso de uso clássico são colunas de auditoria, como 'DataAlteracao' ou 'UsuarioLogado', que você manipula dinamicamente sobrescrevendo o método 'SaveChanges()'."
+                    }
+                ]
+            },
+            {
+                "nome": "Autenticação, Autorização e Identity Framework",
+                "cards": [
+                    {
+                        "q": "Qual a diferença conceitual e prática entre Autenticação e Autorização no ecossistema ASP.NET Core?",
+                        "a": "Autenticação é o processo de desafiar e estabelecer a identidade do usuário (saber quem ele é), geralmente disparado pelo middleware '.UseAuthentication()'. Autorização determina se aquele usuário já identificado possui permissão para acessar um recurso ou executar uma ação, validada pelo middleware '.UseAuthorization()' através de atributos como '[Authorize]'."
+                    },
+                    {
+                        "q": "O que são Claims e qual a vantagem de usá-las em vez do tradicional modelo de Roles (Papéis)?",
+                        "a": "Claims são pares de chave-valor que descrevem características específicas do usuário (ex: 'Email', 'DataDeNascimento', 'NivelAcesso: Gerente'). Enquanto as Roles são genéricas e engessadas ('if User.IsInRole(\"Admin\")'), as Claims permitem um controle de acesso muito mais granular, dinâmico e declarativo baseado em atributos."
+                    },
+                    {
+                        "q": "Como funciona a Autorização Baseada em Políticas (Policy-Based Authorization) no ASP.NET Core?",
+                        "a": "É um modelo que desacopla a regra de autorização do Controller. Você registra uma política no 'Program.cs' combinando requisitos (ex: o usuário deve ter a Claim 'Idade' > 18 e pertencer à Role 'Premium'). No Controller, você apenas decora com '[Authorize(Policy = \"MaiorDeIdadePremium\")]'. Se a regra mudar, você altera apenas a definição da política."
+                    },
+                    {
+                        "q": "Por que o ASP.NET Core Identity utiliza o conceito de 'Stores' (como UserStore e RoleStore) e como customizá-los?",
+                        "a": "As 'Stores' são camadas de abstração que o Identity usa para se comunicar com a persistência de dados sem se acoplar a um banco específico. Por padrão, ele usa o Entity Framework Core, mas se você precisar salvar os usuários no MongoDB ou no Firebase, basta criar uma classe que implemente 'IUserStore<TUser>' e registrá-la no container de DI."
+                    }
+                ]
+            },
+            {
+                "nome": "Tokens JWT e Autenticação Stateless",
+                "cards": [
+                    {
+                        "q": "O que compõe a estrutura anatômica de um token JWT e o que impede que um usuário altere seu conteúdo (como mudar seu nível de acesso)?",
+                        "a": "O JWT é composto por três partes separadas por pontos: Header (algoritmo e tipo), Payload (as Claims/dados) e Signature (Assinatura). O que impede a adulteração é a Assinatura. Ela é gerada pegando o Header + Payload codificados em Base64 e aplicando uma chave secreta que só a API possui. Se o usuário mudar algo no Payload, a assinatura gerada pela API na validação não vai bater com a do token, rejeitando a requisição."
+                    },
+                    {
+                        "q": "Na configuração 'TokenValidationParameters' no Program.cs, quais propriedades são críticas ativar para evitar falhas de segurança gritantes?",
+                        "a": "As propriedades críticas são: 1) 'ValidateIssuerSigningKey = true' (garante que a assinatura seja checada); 2) 'ValidateIssuer' e 'ValidateAudience = true' (garante que o token veio da sua aplicação e é para a sua aplicação); 3) 'ValidateLifetime = true' (rejeita tokens expirados); e 4) 'ClockSkew = TimeSpan.Zero' (zera o tempo de tolerância padrão de 5 minutos do framework, invalidando o token no segundo exato da expiração)."
+                    },
+                    {
+                        "q": "O que é o ataque de 'Token Replay' e qual estratégia mitigar isso ao usar JWT em APIs?",
+                        "a": "É quando um atacante intercepta um JWT válido e o reutiliza para fazer requisições fingindo ser a vítima. Mitiga-se: 1) Usando HTTPS obrigatório em todo o tráfego; 2) Configurando um tempo de vida (TTL) muito curto para o Access Token (ex: 5 a 15 minutos); 3) Ativando a validação de um identificador único de token (Claim 'jti'), guardando os IDs de tokens emitidos temporariamente e rejeitando duplicados."
+                    },
+                    {
+                        "q": "Como funciona o fluxo de segurança para invalidar/revogar um Refresh Token antes do seu tempo de expiração natural?",
+                        "a": "Diferente do JWT que é auto-contido (stateless), o Refresh Token deve ser registrado em uma tabela no banco de dados vinculada ao usuário. Essa tabela contém campos como 'IsRevoked' ou 'DataRevogacao'. Para invalidá-lo (por exemplo, quando o usuário faz Logout ou altera a senha), a API busca o Refresh Token no banco e marca 'IsRevoked = true'. Na próxima tentativa de renovação, a API checa o banco e recusa o token."
+                    }
+                ]
+            },
+            {
+                "nome": "Autorização Avançada baseada em Claims e Políticas",
+                "cards": [
+                    {
+                        "q": "Como funciona o fluxo interno da Autorização baseada em Políticas (Policy-Based) usando 'IAuthorizationRequirement' e 'AuthorizationHandler<T>'?",
+                        "a": "A política é definida por três pilares: 1) A política em si (registrada no DI), 2) O Requisito ('IAuthorizationRequirement'), que armazena os dados da regra (ex: Nível Mínimo de Acesso), e 3) O Manipulador ('AuthorizationHandler'), que contém a lógica C# pura que lê as Claims do contexto atual e decide se chama 'context.Succeed(requirement)' para liberar o acesso ou não."
+                    },
+                    {
+                        "q": "O que acontece se uma rota da API for decorada com múltiplos atributos '[Authorize(Policy = \"A\")]' e '[Authorize(Policy = \"B\")]'?",
+                        "a": "O ASP.NET Core avalia essas políticas de forma cumulativa usando a lógica 'AND'. Isso significa que o usuário autenticado precisa atender obrigatoriamente a todos os requisitos da Política A E de todos os requisitos da Política B para conseguir acessar o endpoint. Se falhar em qualquer uma, recebe '403 Forbidden'."
+                    },
+                    {
+                        "q": "Como você implementa uma política de autorização customizada que exige uma validação dinâmica no banco de dados sem destruir a performance da API?",
+                        "a": "Você cria um 'AuthorizationHandler' customizado que injeta o DbContext (ou um serviço de cache) no método 'HandleRequirementAsync'. [Aviso de Performance]: Como esse handler roda a cada requisição que bate no endpoint protegido, consultar o banco diretamente pode gerar um gargalo. A boa prática é buscar essas permissões dinâmicas de uma camada de cache rápido distribuído (como Redis)."
+                    },
+                    {
+                        "q": "Qual a diferença prática no retorno HTTP entre um erro de Autenticação (401 Unauthorized) e um erro de Autorização (403 Forbidden)?",
+                        "a": "O erro '401 Unauthorized' ocorre quando a API não conseguiu identificar quem o usuário é (ex: token ausente, expirado ou assinatura inválida). O erro '403 Forbidden' ocorre quando a API sabe exatamente quem o usuário é (ele está autenticado), mas as Claims ou Políticas dele não dão permissão suficiente para acessar aquele recurso específico."
+                    }
+                ]
+            },
+            {
+                "nome": "Mecanismos Internos e Customização do ASP.NET Core Identity",
+                "cards": [
+                    {
+                        "q": "O que são os componentes UserManager, SignInManager e RoleManager dentro do ASP.NET Core Identity?",
+                        "a": "Eles são as APIs de alto nível do framework: 1) 'UserManager<TUser>' gerencia o ciclo de vida do usuário (criação, edição, validação de senhas e geração de tokens de redefinição). 2) 'SignInManager<TUser>' cuida do fluxo de login, autenticação multifator (MFA) e emissão de cookies de sessão. 3) 'RoleManager<TRole>' lida com a criação e gerenciamento de grupos ou papéis do sistema."
+                    },
+                    {
+                        "q": "Como você customiza a classe IdentityUser padrão para adicionar novos campos obrigatórios (ex: CPF, EmpresaId) no banco de dados?",
+                        "a": "Cria-se uma classe customizada que herda de 'IdentityUser' (ex: 'public class Usuario : IdentityUser'). Adicionam-se as novas propriedades nela. Depois, atualiza-se o DbContext para herdar de 'IdentityDbContext<Usuario>' e altera-se o registro no 'Program.cs' para usar 'builder.Services.AddIdentityCore<Usuario>()'. Por fim, basta rodar uma nova Migration."
+                    },
+                    {
+                        "q": "Como funciona o mecanismo de Hash de Senha do Identity (PasswordHasher) e por que ele é seguro contra ataques de força bruta?",
+                        "a": "O 'PasswordHasher<TUser>' utiliza algoritmos robustos de derivação de chave (como PBKDF2 com HMAC-SHA256). Para cada usuário, ele gera automaticamente um 'Salt' (uma string aleatória única) que é combinada com a senha antes do hashing. Isso impossibilita o uso de Rainbow Tables (tabelas de hashes pré-computados por hackers), pois duas senhas iguais geram hashes totalmente diferentes."
+                    },
+                    {
+                        "q": "Qual a finalidade das tabelas 'AspNetUserTokens' e 'AspNetUserLogins' geradas por padrão na estrutura do Identity?",
+                        "a": "'AspNetUserTokens' armazena tokens temporários gerados para o usuário (como códigos de autenticação de dois fatores ou tokens de confirmação de e-mail). 'AspNetUserLogins' armazena mapeamentos de logins externos (como autenticação via Google, Microsoft ou GitHub), vinculando a conta externa ao usuário interno da aplicação."
+                    }
+                ]
+            },
+            {
+                "nome": "Resiliência e Tratamento Global de Erros",
+                "cards": [
+                    {
+                        "q": "O que é a interface 'IExceptionHandler' introduzida no ASP.NET Core (.NET 8+) e por que ela é preferível ao antigo 'UseExceptionHandler' baseado em rotas/controllers?",
+                        "a": "O 'IExceptionHandler' é uma interface nativa que permite centralizar a lógica de tratamento de exceções em uma classe injetável e fortemente tipada. Ela substitui a necessidade de criar um Controller específico para capturar erros. Você pode registrar múltiplos handlers no container de DI, e eles são executados em cadeia até que um deles retorne 'true' indicando que tratou o erro."
+                    },
+                    {
+                        "q": "O que especifica a RFC 7807 (Problem Details) e qual a importância de adotá-la nas respostas de erro de uma API?",
+                        "a": "A RFC 7807 define um formato JSON padrão e legível por máquina para retornar detalhes de erros em APIs HTTP (contendo campos como 'type', 'title', 'status', 'detail' e 'instance'). Adotá-la garante consistência: clientes (front-end/integrações) sempre saberão exatamente como interpretar um erro na sua API, seja ele uma validação de negócio (400) ou uma falha interna (500)."
+                    },
+                    {
+                        "q": "No contexto da biblioteca Polly, qual a diferença conceitual e prática entre as estratégias de 'Retry' (Tentativa) e 'Circuit Breaker' (Disjuntor)?",
+                        "a": "'Retry' reexecuta automaticamente uma operação que falhou devido a um erro transitório (ex: oscilação rápida de rede), esperando que a próxima tentativa funcione. O 'Circuit Breaker' monitora as falhas; se o serviço externo ficar instável por muito tempo, o disjuntor 'abre' e bloqueia temporariamente todas as novas requisições imediatamente, sem gastar recursos tentando bater em um sistema que sabidamente está fora do ar."
+                    },
+                    {
+                        "q": "Como o conceito de 'Idempotência' se conecta diretamente com a implementação de políticas de Retry em chamadas HTTP/Banco de Dados?",
+                        "a": "Se você aplicar uma política de Retry em uma operação que não é idempotente (ex: criar um pedido via POST), um timeout na rede pode fazer você tentar de novo e acabar gerando um pedido duplicado no banco. [Regra]: Só aplique retries automáticos em operações comprovadamente idempotentes (como GET, PUT, DELETE) ou garanta que a API de destino possua uma chave de idempotência para ignorar requisições repetidas."
+                    }
+                ]
+            },
+            {
+                "nome": "Padrões de Arquitetura de APIs (RESTful, Minimal APIs e CQRS)",
+                "cards": [
+                    {
+                        "q": "Qual a diferença de arquitetura e performance entre as Minimal APIs (introduzidas no .NET 6+) e as APIs tradicionais baseadas em Controllers?",
+                        "a": "As Minimal APIs utilizam geradores de código fonte (Source Generators) e expressões lambda diretamente no mapeamento de rotas, eliminando a pesada infraestrutura de reflexão (Reflection) dos Controllers. Isso resulta em um tempo de inicialização (Startup) drasticamente menor e maior throughput de requisições por segundo, além de reduzir o código boilerplate em microsserviços."
+                    },
+                    {
+                        "q": "O que propõe o padrão CQRS (Command Query Responsibility Segregation) e quais as vantagens de adotá-lo com a biblioteca MediatR?",
+                        "a": "O CQRS separa estritamente as operações de alteração de dados (Commands) das operações de leitura (Queries). Usar a biblioteca MediatR ajuda a implementar o padrão Mediator, desacoplando completamente os Controllers das regras de negócio. O Controller apenas envia uma mensagem para o MediatR, que a direciona automaticamente para o seu respectivo Handler, centralizando e isolando a execução."
+                    },
+                    {
+                        "q": "No design de APIs RESTful, qual a diferença semântica e de comportamento prático entre os verbos HTTP PUT e PATCH?",
+                        "a": "O PUT é utilizado para atualização completa/substituição do recurso. O cliente deve enviar o objeto inteiro atualizado; propriedades ausentes na requisição geralmente são zeradas ou resetadas para o padrão no banco. O PATCH é utilizado para atualizações parciais; o cliente envia apenas os campos específicos que deseja modificar, preservando o restante do estado do recurso."
+                    },
+                    {
+                        "q": "O que significa dizer que um método HTTP é Idempotente e quais dos verbos principais (GET, POST, PUT, DELETE) possuem essa característica?",
+                        "a": "Significa que fazer múltiplas requisições idênticas produzirá exatamente o mesmo efeito colateral no servidor que fazer uma única requisição. GET, PUT e DELETE são idempotentes (deletar algo que já foi deletado ou atualizar com o mesmo valor mantém o estado estável). O POST NÃO é idempotente, pois dispará-lo múltiplas vezes criará múltiplos registros duplicados."
+                    }
+                ]
+            },
+            {
+                "nome": "Performance, Caching e Monitoramento",
+                "cards": [
+                    {
+                        "q": "Qual a diferença conceitual e de cenário de uso entre o InMemory Cache e o Distributed Cache (como Redis) no ASP.NET Core?",
+                        "a": "O InMemory Cache armazena os dados diretamente na memória RAM da instância que está rodando a aplicação; é extremamente rápido, mas se a API reiniciar ou houver múltiplas instâncias atrás de um Load Balancer, os dados são perdidos ou ficam inconsistentes entre servidores. O Distributed Cache armazena os dados em um servidor externo centralizado (ex: Redis), garantindo que todas as instâncias da API acessem exatamente o mesmo cache, ideal para escalabilidade horizontal."
+                    },
+                    {
+                        "q": "O que é o fenômeno 'Cache Stampede' (ou Cache Avalanche) e qual estratégia pode ser adotada no código para mitigá-lo?",
+                        "a": "Acontece quando uma chave de cache muito acessada expira e, simultaneamente, centenas de requisições concorrentes percebem a ausência do dado e disparam consultas pesadas ao banco de dados ao mesmo tempo, gerando um gargalo ou queda do banco. Mitiga-se usando travas de concorrência (locking/semaphore) para que apenas a primeira requisição consulte o banco e monte o cache, enquanto as outras aguardam a liberação, ou renovando o cache em background antes da expiração real."
+                    },
+                    {
+                        "q": "Como funciona o middleware nativo de Health Checks no ASP.NET Core e de que forma ele é integrado a orquestradores como o Kubernetes?",
+                        "a": "O Health Checks expõe endpoints rápidos (ex: '/health') que rodam testes em tempo real para verificar a saúde da API e de suas dependências (banco, mensageria, serviços externos). Orquestradores como o Kubernetes batem nesses endpoints periodicamente (Liveness e Readiness Probes): se o endpoint responder com erro (HTTP 503), o orquestrador sabe que a instância está travada ou doente e a reinicia automaticamente."
+                    },
+                    {
+                        "q": "O que são Métricas, Logs e Traces dentro do conceito de Observabilidade em APIs .NET modernas?",
+                        "a": "São os três pilares da observabilidade: 1) Logs registram eventos discretos com contexto (ex: erro ao processar o pagamento X). 2) Métricas são dados numéricos agregados ao longo do tempo (ex: consumo de CPU, requisições por segundo). 3) Traces acompanham a jornada completa de uma requisição conforme ela viaja por diferentes microsserviços e bancos de dados, permitindo identificar exatamente qual etapa causou lentidão."
+                    }
+                ]
+            },
+            {
+                "nome": "Estratégia e Dicas de Entrevista",
+                "cards": [
+                    {
+                        "q": "Qual a melhor forma de exemplificar o uso prático de Middlewares e do Pipeline HTTP para impressionar o avaliador?",
+                        "a": "Cite cenários reais de infraestrutura de software que você domina, como: 1) Criação de um Middleware global de tratamento de exceções (try/catch) para padronizar as respostas de erro da API. 2) Um middleware de telemetria/log que usa um 'Stopwatch' para medir o tempo de execução de cada requisição e capturar gargalos."
+                    },
+                    {
+                        "q": "Como responder à clássica pergunta: 'Como você garante que as queries do Entity Framework Core não vão derrubar a performance em produção?'",
+                        "a": "Mostre que você monitora o ciclo de vida do dado: 'Eu ativo o log do EF Core em desenvolvimento para auditar o SQL gerado. Garanto o uso rigoroso de paginação (.Skip/.Take), aplico .AsNoTracking() em cenários de leitura e, se houver muitos relacionamentos complexos, utilizo .AsSplitQuery() para evitar explosão cartesiana'."
+                    },
+                    {
+                        "q": "Como demonstrar conhecimento sênior se o entrevistador te perguntar: 'Onde você armazena a chave secreta de assinatura do JWT (SymmetricSecurityKey)?'",
+                        "a": "Seja enfático sobre segurança de produção: 'A chave secreta jamais deve ficar hardcoded no código ou no appsettings.json. Em desenvolvimento, utilizo User Secrets. Em produção, ela deve ser injetada via variáveis de ambiente criptografadas do container ou, idealmente, recuperada de um cofre de chaves como o Azure Key Vault ou AWS Secrets Manager no startup'."
+                    },
+                    {
+                        "q": "Qual a melhor postura ao explicar como você implementa renovação de credenciais (Refresh Tokens) em uma API REST?",
+                        "a": "Explique a arquitetura do fluxo: 'Eu configuro o token JWT (Access Token) com um tempo de vida curto (ex: 15 minutos) por segurança. Junto dele, a API emite um Refresh Token opaco, de longa duração, armazenado de forma segura no banco de dados. Quando o JWT expira, o cliente envia o Refresh Token para uma rota específica da API, que valida a expiração, revoga o antigo se necessário e emite um novo par de tokens'."
+                    },
+                    {
+                        "q": "Como responder se o entrevistador perguntar se é seguro colocar informações confidenciais de negócio (como o CPF ou salário do usuário) dentro do Payload do JWT?",
+                        "a": "Seja categórico: 'Não é seguro. O Payload do JWT é apenas codificado em Base64, o que significa que qualquer pessoa que interceptar o token consegue ler seu conteúdo facilmente dando um decode. No JWT só devem ir dados de identificação pública do usuário (como ID, Email e Claims de permissão). Dados sensíveis devem ficar protegidos no banco de dados e acessados na API por meio do ID contido no token'."
+                    },
+                    {
+                        "q": "Se o avaliador te desafiar: 'Se o JWT é stateless e a API não guarda sessão, como você desloga um usuário imediatamente se o token dele ainda vale por 10 minutos?'",
+                        "a": "Mostre conhecimento arquitetural avançado: 'Em cenários estritamente stateless, temos que esperar o token expirar. Se o negócio exigir revogação imediata (ex: usuário bloqueado por fraude), a solução é implementar uma Blacklist de Tokens usando um cache distribuído ultra rápido como o Redis. Quando o usuário é deslogado, o identificador do token ('jti') é salvo no Redis com o tempo restante de vida. Um middleware na API checa essa lista a cada requisição'."
+                    },
+                    {
+                        "q": "Como responder se o entrevistador perguntar: 'Por que deveríamos usar Autorização por Políticas em vez de encher os Controllers com Roles [Authorize(Roles = \"Admin,Gerente\")]'?",
+                        "a": "Defenda a manutenibilidade do código: 'O uso de strings hardcoded de Roles nos Controllers acopla a regra de negócio à infraestrutura e gera duplicação de código. Se amanhã a regra mudar e o coordenador também puder acessar, eu teria que alterar dezenas de arquivos. Com as Políticas (Policies), o Controller só conhece o nome da regra. Se o critério mudar, eu altero em um único lugar: na configuração da política no Program.cs'."
+                    },
+                    {
+                        "q": "Qual postura adotar se o avaliador te desafiar com o cenário: 'Como você criaria uma regra onde o usuário só pode deletar um registro se ele mesmo tiver sido o criador desse registro?'",
+                        "a": "Mostre conhecimento técnico refinado usando Resource-Based Authorization: 'Para regras de negócio que dependem do dado que está sendo manipulado, a autorização declarativa tradicional falha. Eu utilizaria o serviço 'IAuthorizationService' injetado diretamente no método do Controller. Após buscar o registro no banco de dados, eu chamaria explicitamente o método 'AuthorizeAsync(User, registro, \"PoliticaDonoDoRecurso\")'. O handler receberia a entidade, compararia o ID do criador com a Claim do usuário logado e retornaria o resultado dinamicamente'."
+                    },
+                    {
+                        "q": "Como demonstrar experiência prática ao ser perguntado sobre as configurações de segurança padrão (IdentityOptions) de senhas?",
+                        "a": "Mostre que você ajusta o framework para a realidade do negócio: 'No Program.cs, eu costumo customizar as propriedades de 'options.Password' e 'options.Lockout'. Para uma API moderna, configuro requisitos fortes de complexidade de senha (tamanho mínimo, caracteres especiais) e, principalmente, ativo o Lockout (ex: bloquear a conta por 15 minutos após 5 tentativas falhas) para mitigar de forma eficiente ataques de força bruta'."
+                    },
+                    {
+                        "q": "Qual o argumento técnico ideal se o entrevistador questionar o uso do Identity em um ecossistema de microsserviços?",
+                        "a": "Apresente uma visão de arquitetura madura: 'O ASP.NET Core Identity é excelente para gerenciar o cadastro e os dados dos usuários, mas em uma arquitetura de múltiplos microsserviços, colocar a validação do Identity com banco de dados em cada serviço gera acoplamento prejudicial. A abordagem correta é centralizar o Identity em um serviço único de Autenticação (ou Identity Provider) que emite tokens JWT. Os demais microsserviços apenas validam a assinatura pública do token de forma stateless, sem conhecer a estrutura do Identity ou acessar o banco dele diretamente'."
+                    },
+                    {
+                        "q": "Como responder à pergunta: 'É uma boa prática capturar exceções genéricas (try/catch Exception) dentro das suas regras de negócio nos Services/Controllers?'",
+                        "a": "Mostre visão de arquitetura: 'Evito ao máximo espalhar blocos try/catch genéricos pelas camadas de negócio, pois isso polui o código e mascara problemas que deveriam ser tratados na raiz. Prefiro deixar a exceção subir e ser capturada centralizadamente pelo 'IExceptionHandler' global. No service, eu só uso try/catch se for para capturar uma exceção de infraestrutura específica, tratá-la localmente ou enriquecê-los com contexto de negócio antes de relançar'."
+                    },
+                    {
+                        "q": "Qual o argumento de nível Pleno para defender que mensagens de exceção interna (como 'ex.Message' ou StackTrace) nunca devem ser retornadas no JSON de erro para o cliente externo?",
+                        "a": "Foque estritamente em segurança e conformidade: 'Retornar o StackTrace ou detalhes internos de um erro do banco de dados (como nomes de colunas ou chaves violadas) expõe a anatomia interna do nosso software e infraestrutura. Isso é uma vulnerabilidade grave de segurança que facilita ataques direcionados. Em produção, logs ricos com o erro real devem ir para o monitoramento interno (Serilog/Seq/Application Insights), enquanto o usuário recebe apenas um ID de correlação e uma mensagem genérica, amigável e segura'."
+                    },
+                    {
+                        "q": "Como responder à pergunta: 'As Minimal APIs vieram para substituir completamente os Controllers? Quando você escolhe cada uma?'",
+                        "a": "Demonstre pragmatismo técnico: 'Não vieram para substituir, mas para coexistir. Escolho Minimal APIs para microsserviços, funções serverless ou APIs simples e focadas em performance, onde quero o mínimo de overhead. Prefiro Controllers tradicionais em monolitos grandes ou sistemas legados muito complexos, onde a organização nativa por pastas/classes e os Action Filters do MVC ajudam o time a gerenciar centenas de endpoints'."
+                    },
+                    {
+                        "q": "Qual o argumento de nível Pleno para justificar o uso do padrão CQRS sem parecer que você está criando 'overengineering' (complexidade desnecessária)?",
+                        "a": "Foque na escalabilidade e evolução do software: 'Adoto o CQRS (mesmo em um banco único) porque regras de leitura são fundamentalmente diferentes de regras de escrita. Consultas exigem JOINs complexos, DTOs específicos e cache (performance), enquanto escritas exigem validações rígidas de consistência e auditoria. Separar em Commands e Queries permite otimizar as consultas (usando Dapper, por exemplo) e manter as escritas seguras com o EF Core, sem que uma regra interfira na outra'."
+                    },
+                    {
+                        "q": "Como responder à pergunta: 'Como você decide o tempo de expiração (TTL - Time to Live) ideal para os dados que você joga no Cache?'",
+                        "a": "Demonstre critério de negócio e técnico: 'O TTL depende diretamente da volatilidade do dado e da tolerância do sistema a informações desatualizadas. Para tabelas de CEP ou estados, uso um TTL longo (dias), pois quase nunca mudam. Para catálogos de produtos, uso um TTL médio (horas) combinado com uma estratégia de invalidação ativa (limpar o cache sempre que o produto for editado). Para dados altamente críticos ou financeiros, prefiro não usar cache ou adotar TTLs curtíssimos (segundos/minutos) apenas para suportar picos de acessos concorrentes'."
+                    },
+                    {
+                        "q": "Qual postura de nível Pleno adotar quando o entrevistador perguntar: 'A API está lenta em produção. Como você começa a investigar o problema?'",
+                        "a": "Evite adivinhações e foque em diagnóstico estruturado: 'Eu jamais saio alterando o código às cegas. O primeiro passo é olhar as ferramentas de APM e tracing (como Application Insights, Dynatrace ou OpenTelemetry) para identificar o gargalo exato. Eu sigo o caminho da requisição: avalio se o atraso está no tempo de execução do C#, se há alguma query lenta de banco de dados (analisando o plano de execução), ou se a lentidão é causada por uma API externa que estamos chamando de forma síncrona. Só após isolar a causa raiz eu proponho a otimização'."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "materia": "Testes Automatizados",
+        "topicos": [
+            {
+                "nome": "Isolamento de Código e Dublês",
+                "cards": [
+                    {
+                        "q": "Qual a principal diferença conceitual entre usar o Moq (Mocking) e um banco de dados In-Memory para testar uma regra de negócio?",
+                        "a": "O Moq serve para isolar a unidade de código simulando comportamentos de interfaces de forma rápida (Teste Unitário). O banco In-Memory (ou Testcontainers) valida a integração real com as queries e restrições de dados do EF Core (Teste de Integração)."
+                    },
+                    {
+                        "q": "Como a biblioteca Moq se comporta ao tentar mockar um método que não foi marcado como virtual ou não faz parte de uma interface?",
+                        "a": "O Moq falhará em tempo de execução. Ele cria proxies dinâmicos e precisa que o método seja abstrato, virtual ou definido em uma interface para conseguir interceptar e configurar o comportamento com o '.Setup()'."
+                    }
+                ]
+            },
+            {
+                "nome": "Padrões de Projeto em Testes",
+                "cards": [
+                    {
+                        "q": "Como o Design Pattern Builder (Data Builder) ajuda a manter a manutenibilidade de uma suíte de testes unitários?",
+                        "a": "Ele encapsula a criação de objetos complexos usando interfaces fluídas. Se o construtor da classe de negócio mudar amanhã adicionando um novo campo obrigatório, você só precisa alterar a classe Builder do teste, evitando quebrar centenas de testes que instanciavam a classe manualmente."
+                    }
+                ]
+            },
+            {
+                "nome": "Testes com Moq",
+                "cards": [
+                    {
+                        "q": "O que faz o método '.Setup()' na biblioteca Moq e qual a importância de usar o 'It.IsAny<T>()'?",
+                        "a": "O '.Setup()' define o comportamento esperado de um método da interface mockada quando ele for chamado pelo código testado. O 'It.IsAny<T>()' serve como um coringa (argument matcher), dizendo ao Moq para retornar aquele valor configurado não importa qual seja o argumento exato passado desde que seja do tipo 'T'."
+                    },
+                    {
+                        "q": "Para que serve o método '.Verify()' no Moq e em que tipo de cenário ele é indispensável?",
+                        "a": "O '.Verify()' serve para garantir que um método do mock foi de fato chamado durante a execução do teste, permitindo validar também a quantidade de vezes ('Times.Once()', 'Times.Never()'). É indispensável para testar métodos do tipo 'void' ou ações que não retornam dados, mas geram efeitos colaterais (ex: enviar um e-mail ou salvar um log)."
+                    },
+                    {
+                        "q": "Qual a diferença entre o comportamento de um Mock estrito (MockBehavior.Strict) e um Mock solto (MockBehavior.Loose)?",
+                        "a": "O 'Loose' é o padrão: se o código chamar um método do mock que não foi configurado no '.Setup()', ele não quebra e apenas retorna o valor padrão do tipo (null, false, 0). O 'Strict' faz o teste falhar imediatamente (lança uma exceção) se qualquer método não configurado explicitamente for invocado."
+                    },
+                    {
+                        "q": "Como você configura o Moq para simular o lançamento de uma exceção ao chamar um método assíncrono?",
+                        "a": "Utiliza-se o método '.ThrowsAsync()' acoplado ao Setup. Exemplo: 'mockRepo.Setup(x => x.Salvar(it.IsAny<User>())).ThrowsAsync(new Exception(\"Erro de banco\"));'. Isso é vital para testar se os blocos de 'catch' e tratamentos de erro do seu sistema funcionam corretamente."
+                    }
+                ]
+            },
+            {
+                "nome": "Estratégia e Dicas de Entrevista",
+                "cards": [
+                    {
+                        "q": "Como defender o uso do padrão Builder (Data Builder) e do Moq em uma discussão sobre arquitetura de testes?",
+                        "a": "Foque no custo de manutenção: 'Utilizo o Data Builder para que meus testes unitários fiquem limpos (fluídos) e focados apenas no que importa para a regra de negócio. Se o construtor da classe mudar amanhã, eu altero apenas o Builder, impedindo o efeito cascata de quebrar centenas de testes criados manualmente'."
+                    },
+                    {
+                        "q": "Qual postura adotar se o entrevistador questionar a utilidade de testes de integração vs testes unitários?",
+                        "a": "Mostre equilíbrio arquitetural: 'Eles se complementam. O teste unitário com Moq me dá feedback rápido de que a lógica interna do método funciona isoladamente. O teste de integração (usando banco em memória ou Testcontainers) me garante que a query do EF Core e as constraints do banco real não vão falhar quando o código for para produção'."
+                    },
+                    {
+                        "q": "Como responder se o entrevistador perguntar se você prefere MockBehavior.Strict ou Loose no dia a dia?",
+                        "a": "Demonstre bom senso prático: 'Prefiro o Loose (padrão) para a maioria dos cenários porque deixa os testes menos frágeis a refatorações simples. Uso o Strict apenas quando o isolamento precisa ser cirúrgico e eu quero ter certeza absoluta de que nenhum outro método colateral inesperado está sendo chamado pelo componente'."
+                    },
+                    {
+                        "q": "Qual o argumento de nível Pleno para justificar o teste de chamadas com '.Verify()' em vez de apenas checar o retorno do método?",
+                        "a": "Foque no comportamento do software: 'Uso o Verify quando o objetivo do método é disparar um fluxo de execução essencial e não apenas calcular um valor. Por exemplo, em um fluxo de checkout, preciso verificar se o serviço de pagamento foi chamado exatamente uma vez. Se o Verify falhar, a regra de negócio quebrou'."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "materia": "Gerencia de Configuração e Mudança",
+        "topicos": [
+            {
+                "nome": "Ciclo de Vida e Segurança de Variáveis",
+                "cards": [
+                    {
+                        "q": "Na arquitetura do ASP.NET Core, qual a boa prática para ler credenciais sensíveis (ex: Connection Strings) em ambiente de desenvolvimento vs produção?",
+                        "a": "Em Desenvolvimento, utiliza-se o 'User Secrets' para que as senhas fiquem salvas na máquina local fora da pasta do projeto. Em Produção, injeta-se via Variáveis de Ambiente do container ou cofres de chaves (como Azure Key Vault ou AWS Secrets Manager). [Pegadinha]: Nunca comitar arquivos appsettings com senhas reais no Git."
+                    }
+                ]
+            },
+            {
+                "nome": "Integração Contínua e Versionamento de Banco",
+                "cards": [
+                    {
+                        "q": "Qual a estratégia segura para aplicar migrações do EF Core no banco de dados de produção usando pipelines de CI/CD?",
+                        "a": "Gerar um script SQL idempotente durante o pipeline de build através do comando 'dotnet ef migrations script' e aplicar esse script na etapa de Deployment. [Pegadinha]: Executar 'context.Database.Migrate()' diretamente na inicialização da API em produção pode causar concorrência se houver múltiplas instâncias escaladas subindo juntas."
+                    }
+                ]
+            },
+            {
+                "nome": "Estratégias de Branching e Fluxo de Trabalho",
+                "cards": [
+                    {
+                        "q": "Qual a principal diferença prática entre as estratégias de branching Git Flow e Trunk-Based Development?",
+                        "a": "O Git Flow utiliza branches de longa duração (como 'develop' e 'main') e feature branches isoladas que demoram a ser integradas, sendo ideal para releases planejadas. O Trunk-Based foca em desenvolvedores integrando pequenas mudanças diretamente na branch principal ('main/trunk') várias vezes ao dia, reduzindo o risco de conflitos gigantescos (Merge Hells) e acelerando o CI/CD."
+                    },
+                    {
+                        "q": "O que significa o conceito de 'Mudança Avançada' (Fast-Forward Merge) no Git e quando ele ocorre?",
+                        "a": "Ocorre quando a branch de destino não sofreu nenhuma alteração nova desde que a branch de origem foi criada. O Git apenas move o ponteiro para frente, sem criar um commit de merge intermediário. [Dica]: Usar 'Squash and Merge' em Pull Requests ajuda a manter o histórico da branch principal limpo, consolidando múltiplos commits de desenvolvimento em um só."
+                    },
+                    {
+                        "q": "Como a prática de Code Review e Pull Requests se conecta com a Gerência de Configuração?",
+                        "a": "Eles funcionam como uma linha de defesa e governança. Garante que nenhuma mudança de configuração ou código entre em branches protegidas sem a revisão de outro par (garantia de qualidade) e sem passar pelas validações automáticas do pipeline de CI."
+                    }
+                ]
+            },
+            {
+                "nome": "Pipelines de CI/CD",
+                "cards": [
+                    {
+                        "q": "Qual a diferença conceitual e prática entre os pilares de Continuous Integration (CI), Continuous Delivery (CD) e Continuous Deployment (CD)?",
+                        "a": "Continuous Integration (CI) foca em automatizar o build e os testes a cada commit. Continuous Delivery garante que o código testado seja empacotado e esteja pronto para ir para produção, mas o deploy final depende de uma aprovação manual. Continuous Deployment leva a automação ao limite: cada alteração que passa na esteira de testes é publicada automaticamente em produção, sem intervenção humana."
+                    },
+                    {
+                        "q": "O que são e qual a importância dos 'Artifacts' (Artefatos) gerados em um pipeline de CI/CD?",
+                        "a": "Artefatos são os arquivos compilados e imutáveis gerados na etapa de Build (como um pacote NuGet, um zip do app publicado, ou uma imagem Docker). Eles garantem o princípio de 'Build Once, Deploy Anywhere': o exato mesmo binário que foi testado no pipeline é o que será implantado em Homologação e Produção, evitando variações de compilação entre ambientes."
+                    },
+                    {
+                        "q": "Por que o uso de Containers (como Docker) revolucionou a etapa de CD na gerência de configuração?",
+                        "a": "Porque o container encapsula o código, o runtime (ex: .NET 8 SDK) e todas as dependências do sistema operacional em uma imagem única. Isso elimina o clássico problema do 'na minha máquina funciona', garantindo que o comportamento do app C# seja idêntico no ambiente do desenvolvedor, na esteira de CI e nos servidores de produção."
+                    }
+                ]
+            },
+            {
+                "nome": "Gestão de Ambientes e Segredos",
+                "cards": [
+                    {
+                        "q": "Como o ASP.NET Core identifica em qual ambiente (Development, Staging, Production) a aplicação está rodando?",
+                        "a": "Ele utiliza a variável de ambiente do sistema operacional chamada 'ASPNETCORE_ENVIRONMENT'. O runtime lê esse valor durante a inicialização e expõe através da interface 'IWebHostEnvironment', permitindo carregar arquivos de configuração específicos (ex: appsettings.Production.json) ou tomar decisões no código usando métodos como 'env.IsDevelopment()'."
+                    },
+                    {
+                        "q": "O que são 'User Secrets' no ecossistema .NET e por que eles são usados apenas em ambiente de desenvolvimento?",
+                        "a": "É uma ferramenta que armazena dados sensíveis (como strings de conexão e chaves de API) em um arquivo JSON localizado no perfil do usuário do sistema operacional, totalmente fora da pasta do projeto. Eles evitam o risco de comitar senhas no Git. [Aviso]: Eles não são criptografados, apenas isolados do código, por isso seu uso é estritamente proibido em produção."
+                    },
+                    {
+                        "q": "Qual o papel de um Secret Manager (como Azure Key Vault, AWS Secrets Manager ou HashiCorp Vault) na gerência de configuração de produção?",
+                        "a": "Eles centralizam, criptografam e controlam o acesso a segredos de produção de forma altamente segura. Em vez de injetar senhas puras em arquivos de texto no servidor, a aplicação autentica-se no cofre de chaves em tempo de execução (usando Managed Identities, por exemplo) para ler as credenciais necessárias de forma rastreável."
+                    }
+                ]
+            },
+            {
+                "nome": "Versionamento e Migrações de Banco de Dados",
+                "cards": [
+                    {
+                        "q": "O que significa o conceito de 'Migrações Idempotentes' no contexto de deploys de banco de dados?",
+                        "a": "Um script ou migração idempotente é aquele que pode ser executado múltiplas vezes sem alterar o resultado além da primeira aplicação e sem causar erros. No EF Core, isso é feito gerando scripts que verificam se a migração já existe na tabela '__EFMigrationsHistory' antes de tentar rodar os comandos de alteração de tabela."
+                    },
+                    {
+                        "q": "Qual a diferença entre a estratégia de migração baseada em código (Code-First Migrations) e a baseada em estado/comparação (Database-First)?",
+                        "a": "No Code-First (padrão do EF Core), o código C# é a fonte da verdade; as alterações nas classes geram arquivos de migração que atualizam o banco. No Database-First, as alterações são feitas diretamente no banco de dados (via scripts ou DBAs) e uma ferramenta de scaffold lê o banco para atualizar as classes C# da aplicação."
+                    },
+                    {
+                        "q": "Por que a remoção direta de uma coluna ou tabela do banco de dados (Destructive Changes) é considerada crítica em ambientes de produção com deploy contínuo?",
+                        "a": "Porque durante o processo de deploy, a versão antiga do código e a versão nova geralmente coexistem por alguns minutos (Blue-Green Deployment ou Rolling Update). Se a migração deletar a coluna imediatamente, a versão antiga do app que ainda está rodando vai falhar instantaneamente ao tentar ler aquela coluna, causando indisponibilidade."
+                    }
+                ]
+            },
+            {
+                "nome": "Estratégia e Dicas de Entrevista",
+                "cards": [
+                    {
+                        "q": "Como demonstrar preocupação com a segurança e conformidade (Compliance) ao falar sobre gestão de configurações?",
+                        "a": "Seja categórico sobre segurança: 'Minha regra de ouro é nunca comitar segredos no Git. Em desenvolvimento uso User Secrets e, para o pipeline de CI/CD e produção, as credenciais sensíveis são injetadas de forma externa via variáveis de ambiente da esteira ou integradas com cofres de chaves como Azure Key Vault'."
+                    },
+                    {
+                        "q": "Qual argumento técnico usar para defender que rodar 'context.Database.Migrate()' no startup da aplicação em produção é perigoso?",
+                        "a": "Explique o comportamento em escala: 'Se a aplicação rodar em um ambiente clusterizado (como Kubernetes ou instâncias escaladas na nuvem), múltiplas réplicas subindo ao mesmo tempo tentarão aplicar a mesma migração concorrencialmente, o que pode travar ou corromper o banco. O correto é gerar o script SQL idempotente na esteira de CI/CD e aplicá-lo na etapa de deploy'."
+                    },
+                    {
+                        "q": "Como responder qual estratégia de branching (Git Flow ou Trunk-Based) você prefere usar no dia a dia?",
+                        "a": "Mostre adaptabilidade: 'A escolha depende da maturidade do time e do produto. Se o time é sênior e possui uma esteira de testes automatizados extremamente robusta, prefiro Trunk-Based pela velocidade. Se o produto exige lançamentos mais cadenciados e homologações rígidas, o Git Flow ou um modelo simplificado com Feature Branches atende muito bem'."
+                    },
+                    {
+                        "q": "Se o entrevistador perguntar como você resolve um conflito de merge (Merge Conflict) complexo em produção, qual a postura ideal?",
+                        "a": "Foque em comunicação e segurança: 'Eu trago a branch de destino para o meu ambiente local, realizo o merge localmente para isolar o conflito e, se as linhas afetadas envolverem a lógica de outro desenvolvedor, eu o alinho diretamente para garantir que a resolução não quebre nenhuma regra de negócio implícita. Jamais resolvo conflitos complexos no escuro'."
+                    },
+                    {
+                        "q": "Como demonstrar mentalidade de qualidade Pleno se o entrevistador perguntar: 'O que você faz se o build passar no CI, mas os testes unitários falharem?'",
+                        "a": "Seja firme na cultura de quebra de esteira: 'A falha em qualquer etapa do CI deve travar o pipeline imediatamente (Red Build) e bloquear o Pull Request. Meu papel como Pleno é investigar a falha no log da esteira, corrigir o código ou o teste quebrado localmente e garantir que a branch principal nunca fique instável devido a testes ignorados'."
+                    },
+                    {
+                        "q": "Como responder sobre sua experiência com ferramentas de CI/CD (ex: GitHub Actions, Azure DevOps, Jenkins) se você não domina a sintaxe do arquivo YAML deles?",
+                        "a": "Foque no conceito, não na ferramenta: 'Tenho excelente familiaridade com o fluxo lógico de uma esteira (Build -> Test -> Package -> Deploy). A sintaxe descritiva (seja em arquivos YAML no GitHub Actions ou Azure Pipelines) eu consulto na documentação conforme a necessidade do projeto, pois o mais importante é entender como estruturar as etapas e garantir a segurança do pipeline'."
+                    },
+                    {
+                        "q": "Como responder se o avaliador perguntar: 'O que você faria se descobrisse que um desenvolvedor comitou uma senha de banco de dados real em uma branch pública do Git?'",
+                        "a": "Demonstre senso de urgência e conformidade: 'A primeira ação não é apenas apagar o arquivo e comitar de novo, pois o histórico do Git continua exposto. Eu revogaria imediatamente aquela credencial no banco de dados para invalidá-la. Depois, alteraria a senha para uma nova e usaria ferramentas como o Git Guardian ou BFG Repo-Cleaner para expurgar o commit antigo do histórico do repositório'."
+                    },
+                    {
+                        "q": "Qual o argumento ideal de nível Pleno para defender a separação estrita de configurações entre ambientes?",
+                        "a": "Foque no isolamento de falhas (Blast Radius): 'A separação estrita garante que falhas ou testes realizados em Desenvolvimento ou Homologação jamais afetem os dados ou a disponibilidade do cliente em Produção. Configurações como limites de timeout, níveis de log (Debug vs Error) e chaves de APIs de pagamento precisam ser isoladas para garantir a segurança jurídica e operacional da empresa'."
+                    },
+                    {
+                        "q": "Como responder se o entrevistador perguntar como você lida com uma alteração destrutiva (ex: renomear uma coluna) em produção de forma segura?",
+                        "a": "Explique a estratégia de duas etapas (Expand and Contract): 'Eu divido a mudança em múltiplos deploys. No primeiro deploy, eu adiciono a coluna nova e modifico o código para escrever em ambas as colunas (antiga e nova) e leio da antiga. Depois, rodo um script de background para migrar os dados antigos. No segundo deploy, mudo o código para ler da nova. Só em um terceiro momento, quando a coluna antiga estiver totalmente em desuso, eu removo ela do banco de dados de forma segura'."
+                    },
+                    {
+                        "q": "Como demonstrar perfil Pleno ao discutir se o desenvolvedor deve ter acesso direto para rodar migrações no banco de produção?",
+                        "a": "Defenda a automação e a governança: 'Em ambientes produtivos, nenhum desenvolvedor deve ter acesso direto de escrita (DML/DDL) no banco de dados por questões de segurança e auditoria. Qualquer alteração de esquema deve ser empacotada na esteira de CI/CD através de service accounts com permissões estritas e revisada previamente no Code Review'."
+                    }
+                ]
+            }
+        ]
+    }
+]
