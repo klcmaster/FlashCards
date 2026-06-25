@@ -2,7 +2,7 @@
 const CACHE_NAME = 'flashcards-v1';
 const ASSETS_TO_CACHE = [
   '/',
-  '/flashcards.html',
+  '/index.html',
   '/manifest.json',
   '/data.json'
 ];
@@ -19,7 +19,7 @@ self.addEventListener('install', (event) => {
           .catch((err) => {
             console.warn('Alguns arquivos não puderam ser cacheados:', err);
             // Continua mesmo se alguns arquivos não conseguirem ser cacheados
-            return cache.add('/flashcards.html');
+            return cache.add('/index.html');
           });
       })
       .then(() => self.skipWaiting())
@@ -93,7 +93,7 @@ self.addEventListener('fetch', (event) => {
             })
             .catch(() => {
               // Retornar página em cache se houver erro de rede
-              return caches.match('/flashcards.html');
+              return caches.match('/index.html');
             });
         })
     );

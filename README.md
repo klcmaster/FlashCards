@@ -23,7 +23,7 @@ Service Worker que implementa:
 - **Atualização automática**: Detecta versões novas do app
 - **Background Sync**: Sincronização de dados quando voltar online
 
-### 3. **flashcards.html (Atualizado)**
+### 3. **index.html (Atualizado)**
 Adicionadas:
 - Meta tags para PWA (theme-color, apple-mobile-web-app-capable)
 - Link para o manifest.json
@@ -44,7 +44,7 @@ python -m http.server 8000
 npx http-server
 
 # Com Live Server no VS Code
-# Clique com botão direito em flashcards.html e selecione "Open with Live Server"
+# Clique com botão direito em index.html e selecione "Open with Live Server"
 ```
 
 ### Opção 2: Publicar em Hosting Gratuito com HTTPS
@@ -74,7 +74,7 @@ vercel
 python -m http.server 8000
 ```
 
-### 2. Abrir em: `http://localhost:8000/flashcards.html`
+### 2. Abrir em: `http://localhost:8000/index.html`
 
 ### 3. Ativar Service Worker:
 - Abra DevTools (F12)
@@ -148,7 +148,7 @@ Quando houver novas versões:
 
 ```
 FlashCards/
-├── flashcards.html      (HTML principal + lógica PWA)
+├── index.html           (HTML principal + lógica PWA)
 ├── service-worker.js    (Service Worker - cache e offline)
 ├── manifest.json        (Configuração da PWA)
 └── data.json           (Dados dos flashcards)

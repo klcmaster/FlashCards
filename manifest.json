@@ -2,7 +2,7 @@
   "name": "FlashCards AI - Estável Pro",
   "short_name": "FlashCards AI",
   "description": "Aplicativo de FlashCards com IA para memorização eficiente",
-  "start_url": "/flashcards.html",
+  "start_url": "/index.html",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
@@ -48,7 +48,7 @@
       "name": "Iniciar Estudo",
       "short_name": "Estudo",
       "description": "Inicia sessão de estudo com os flashcards",
-      "url": "/flashcards.html",
+      "url": "/index.html",
       "icons": [
         {
           "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%236366f1' width='192' height='192' rx='45'/><text x='96' y='140' font-size='120' text-anchor='middle'>📚</text></svg>",
